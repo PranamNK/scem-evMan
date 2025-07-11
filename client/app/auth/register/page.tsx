@@ -1,181 +1,166 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { BsSunFill, BsMoonFill } from "react-icons/bs";
+import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 
 export default function RegisterPage() {
-  const [isDark, setIsDark] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [matchMessage, setMatchMessage] = useState("");
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const root = window.document.documentElement;
-      root.classList.toggle("dark", isDark);
-    }
-  }, [isDark]);
-
   return (
-    <div className="relative h-screen w-full bg-card overflow-hidden pt-12">
-      {/* toggle dark mode */}
-      <div className="absolute top-20 right-4 z-10">
-        <button
-          onClick={() => setIsDark(!isDark)}
-          className={`w-14 h-7 flex items-center p-1 rounded-full transition-colors duration-300 ${
-            isDark ? "bg-primary-400" : "bg-muted"
-          }`}
+    <main className="h-screen flex items-center justify-center p-0 pt-12">
+    {/* Green Top Background SVG */}
+     <div className="absolute top-12 left-0 w-full h-1/3 z-15">
+        <svg
+          viewBox="0 0 24 10"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-full"
+          preserveAspectRatio="none"
         >
-          <div
-            className={`w-5 h-5 bg-card rounded-full shadow-md flex items-center justify-center transform transition-transform duration-300 ${
-              isDark ? "translate-x-7" : "translate-x-0"
-            }`}
-          >
-            {isDark ? (
-              <BsMoonFill className="text-foreground text-xs" />
-            ) : (
-              <BsSunFill className="text-yellow-500 text-xs" />
-            )}
-          </div>
-        </button>
-      </div>
-
-      {/* green top */}
-      <div className="absolute top-0 left-0 w-full h-1/3">
-        <svg viewBox="0 1.5 20 10" xmlns="http://www.w3.org/2000/svg">
           <path
-            d="M 0 0 L 24 0 L 24 4 C 18 8 11 4 0 2"
-            fill="var(--color-primary-200)"
-            stroke="var(--color-primary-200)"
+            d="M 0 0 L 24 0 L 24 4 C 18 8 11 4 0 2 Z"
+            fill="var(--color-primary)"
+            stroke="var(--color-primary)"
             strokeWidth="1"
           />
         </svg>
       </div>
-
-      {/* form */}
-      <div className="flex items-center h-full w-full px-6">
-        <div className="w-full max-w-md p-6 space-y-4 relative">
-          <div className="w-max space-y-2">
-            <h1 className="text-4xl sm:text-5xl font-bold text-card-foreground mb-1.5">
-              SIGN UP
-            </h1>
-            <hr className="bg-primary-400 h-1.5 rounded-2xl" />
-          </div>
-          <form
-            className="space-y-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (password === confirmPassword) {
-                setMatchMessage("Passwords match");
-              } else {
-                setMatchMessage("Passwords do not match");
-              }
-            }}
-          >
-            <p className="text-right text-card-foreground">
-              Already a User?{" "}
-              <a className="hover:underline text-primary-400" href="/auth/login">
-                Login
-              </a>
-            </p>
-            <div className="relative">
-              <MdEmail
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-card-foreground"
-                size={20}
-              />
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="E-Mail ID"
-                className="pl-12 pr-4 bg-muted text-card-foreground placeholder:text-muted-foreground"
-                required
-              />
+      <div className="z-30 grid w-full h-full grid-cols-1 md:grid-cols-2 relative">
+        {/* Left Side (Form) */}
+        <div className=" flex items-center justify-center px-4 sm:px-10 py-8 order-2 md:order-1">
+          <div className="w-full max-w-sm space-y-6">
+            {/* Register Title */}
+            <div className="space-y-2">
+              <h1 className="text-4xl sm:text-5xl font-bold text-foreground z-40">
+                SIGN UP
+              </h1>
+              <div className="h-1 w-24 bg-primary rounded-full" />
             </div>
 
-            <div className="relative">
-              <RiLockPasswordFill
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-card-foreground"
-                size={20}
-              />
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="Create a password"
-                className="pl-12 pr-4 bg-muted text-card-foreground placeholder:text-muted-foreground"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="relative">
-              <FaCheckCircle
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-card-foreground"
-                size={18}
-              />
-              <Input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
-                className="pl-12 pr-4 bg-muted text-card-foreground placeholder:text-muted-foreground"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <p
-              className={`text-right font-medium h-5 ${
-                matchMessage.includes("not")
-                  ? "text-destructive"
-                  : matchMessage
-                  ? "text-green-600"
-                  : ""
-              }`}
+            {/* Form */}
+            <form
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setMatchMessage(
+                  password === confirmPassword
+                    ? "Passwords match"
+                    : "Passwords do not match"
+                );
+              }}
             >
-              {matchMessage || ""}
-            </p>
+              {/* Login Link */}
+              <p className="text-right text-foreground text-sm">
+                Already a User?{" "}
+                <Link className="hover:underline text-primary " href="/auth/login">
+                  Login
+                </Link>
+              </p>
 
-            <div className="flex flex-col gap-4">
-              <Button
-                type="submit"
-                className="w-full cursor-pointer bg-primary-400 hover:bg-primary-600 text-primary-foreground rounded-full"
-              >
-                Continue
-              </Button>
-
-              <div className="flex items-center justify-center gap-3">
-                <div className="h-px bg-muted w-full"></div>
-                <span className="text-muted-foreground whitespace-nowrap">
-                  or
-                </span>
-                <div className="h-px bg-muted w-full"></div>
+              {/* E-Mail */}
+              <div className="relative">
+                <MdEmail
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+                  size={20}
+                />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="E-Mail ID"
+                  className="pl-12 pr-4 py-3 bg-muted text-foreground placeholder:text-muted-foreground"
+                  required
+                />
               </div>
 
-              <Button
-                className={`flex items-center justify-center w-full gap-4 cursor-pointer ${
-                  isDark
-                    ? "bg-card border-card-foreground text-card-foreground"
-                    : "bg-card border-muted text-card-foreground"
-                } border-2 rounded-md`}
-                variant="outline"
+              {/* Password */}
+              <div className="relative">
+                <RiLockPasswordFill
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+                  size={20}
+                />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Create a password"
+                  className="pl-12 pr-4 py-3 bg-muted text-foreground placeholder:text-muted-foreground"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              {/* Confirm Password */}
+              <div className="relative">
+                <FaCheckCircle
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+                  size={18}
+                />
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="pl-12 pr-4 py-3 bg-muted text-foreground placeholder:text-muted-foreground"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              {/* Password Match Message */}
+              <p
+                className={`text-right font-medium text-sm h-5 ${
+                  matchMessage.includes("not")
+                    ? "text-destructive"
+                    : matchMessage
+                    ? "text-green-600"
+                    : ""
+                }`}
               >
-                <FcGoogle size="20" />
-                Continue With Google
-              </Button>
-            </div>
-          </form>
+                {matchMessage || ""}
+              </p>
+
+              <div className="flex flex-col gap-4 pt-2">
+                {/* Continue */}
+                <Button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full py-3 cursor-pointer"
+                >
+                  Continue
+                </Button>
+
+               
+                {/* Google Sign Up */}
+                <Button
+                  className="flex items-center justify-center w-full gap-3 bg-background border-2 border-input text-foreground rounded-md py-3 hover:bg-accent cursor-pointer z-40"
+                  variant="outline"
+                >
+                  <FcGoogle size="20" />
+                  Continue With Google
+                </Button>
+              </div>
+            </form>
+
+            <p className="text-xs text-muted-foreground text-center">
+              ©2025 All rights reserved
+            </p>
+          </div>
+        </div>
+
+        {/* Right Side (Primary Color Box) */}
+        <div className=" flex items-center justify-center order-1 md:order-2">
+          {/* Optional: Add a logo/illustration */}
         </div>
       </div>
-    </div>
+    </main>
   );
 }

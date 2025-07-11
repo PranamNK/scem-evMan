@@ -4,7 +4,10 @@ import FeaturesSection from "@/components/landing/FeaturesSection";
 
 export default function HomePage() {
   return (
-    <main className="bg-background text-foreground" style={{ fontFamily: 'Inter, Arial, sans-serif' }}>
+    <main
+      className="bg-background text-foreground"
+      style={{ fontFamily: "Inter, Arial, sans-serif" }}
+    >
       {/* Inter font for this page only */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -16,8 +19,8 @@ export default function HomePage() {
           {
             label: "Join a Test",
             href: "/join",
-            variant: "outline"
-          }
+            variant: "outline",
+          },
         ]}
         titleClassName="text-5xl md:text-6xl font-extrabold"
         subtitleClassName="text-lg md:text-xl max-w-[600px] text-muted-foreground"
@@ -30,8 +33,8 @@ export default function HomePage() {
       <div className="mt-12 flex flex-col items-center text-muted-foreground text-sm pb-8 px-4">
         <span>
           Made with <span className="text-red-500">❤️</span> by SOSC
-          </span>
-        </div>
+        </span>
+      </div>
     </main>
   );
 }
